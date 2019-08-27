@@ -44,7 +44,7 @@
             <form string="Jasper Reports">
                 <group colspan="4" col='4'>
                     <field name="name"/>
-                    <field name="model_id" required="True" readonly="False"/>
+                    <field name="model" required="True" readonly="False"/>
                     <field name="report_name" string="Report Name"/>
                     <field name="jasper_output" required="True"/>
                     <field name="jasper_report" invisible='1'/>
@@ -78,7 +78,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="model_id"/>
+                <field name="model"/>
                 <field name="report_name"/>
                 <field name="jasper_output"/>
                 <field name="attachment"/>
