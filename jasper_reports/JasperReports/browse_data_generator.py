@@ -458,7 +458,7 @@ class CsvBrowseDataGenerator(BrowseDataGenerator):
                 else:
                     fd, file_name = tempfile.mkstemp()
                     try:
-                        os.write(fd, base64.decodestring(value))
+                        os.write(fd, base64.b64decode(value))
                     finally:
                         os.close(fd)
                     self.temporary_files.append(file_name)
