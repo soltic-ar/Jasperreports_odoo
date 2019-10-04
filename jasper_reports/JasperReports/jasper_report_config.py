@@ -127,6 +127,8 @@ class Report:
                     generator = CsvRecordDataGenerator(
                         self.report, self.data['records'])
                 else:
+                    if not self.ids:
+                        self.ids = self.data['ids']
                     generator = CsvBrowseDataGenerator(
                         self.report, self.model, self.env, self.cr,
                         self.uid, self.ids, self.context)
@@ -254,7 +256,8 @@ class Report:
             'IDS': self.ids,
         }
         if 'parameters' in self.data:
-            parameters.update(json.loads(self.data.get('parameters')))
+            parameters.update(self.data.get('parameters'))
+            parameters.update({'IDS': self.data['ids']})
         server = JasperServer(int(tools.config['jasperport']))
         company_rec = self.env['res.users'].browse(self.uid).company_id
         server.javapath = company_rec and company_rec.java_path or ''
