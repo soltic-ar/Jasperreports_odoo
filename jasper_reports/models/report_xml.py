@@ -153,7 +153,7 @@ class ReportXml(models.Model):
 
     @api.model
     def render_jasper(self, docids, data):
-        cr, uid, context = self.env.args
+        cr, uid, context, x = self.env.args
         if not data:
             data = {}
         doc_record = self.model_id.browse(docids)

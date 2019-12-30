@@ -41,7 +41,8 @@ import codecs
 import logging
 from xml.dom.minidom import getDOMImplementation
 
-from odoo.osv import orm
+# from odoo.osv import orm
+from odoo import models
 
 from .abstract_data_generator import AbstractDataGenerator
 
@@ -119,7 +120,7 @@ class BrowseDataGenerator(AbstractDataGenerator):
                     self.warning(warning % (root, record._name))
                     continue
 
-                if isinstance(value, orm.browse_record):
+                if isinstance(value, models.BaseModel):
                     relations2 = [
                         field.partition('/')[2] for field in relations
                         if field.partition('/')[0] == root and
@@ -127,7 +128,7 @@ class BrowseDataGenerator(AbstractDataGenerator):
                     return self.generate_ids(
                         value, relations2, current_path, current_records)
 
-                if not isinstance(value, orm.browse_record_list):
+                if not isinstance(value, models.BaseModel):
                     wrng2 = "Field '%s' in model '%s' is not a relation field."
                     self.warning(wrng2 % (root, self.model))
                     return current_records
@@ -234,7 +235,7 @@ class XmlBrowseDataGenerator(BrowseDataGenerator):
                     self.warning(wrng4 % (root, record._name))
 
             # Check if it's a many2one
-            if isinstance(value, orm.browse_record):
+            if isinstance(value, models.BaseModel):
                 fields2 = [f.partition('/')[2] for f in fields
                            if f.partition('/')[0] == root]
                 self.generate_xml_record(
@@ -242,7 +243,7 @@ class XmlBrowseDataGenerator(BrowseDataGenerator):
                 continue
 
             # Check if it's a one2many or many2many
-            if isinstance(value, orm.browse_record_list):
+            if isinstance(value, models.BaseModel):
                 if not value:
                     continue
 
@@ -395,7 +396,7 @@ class CsvBrowseDataGenerator(BrowseDataGenerator):
                             wrng6 % (root, current_path, record._name))
 
             # Check if it's a many2one
-            if isinstance(value, orm.browse_record):
+            if isinstance(value, models.BaseModel):
                 fields2 = [f.partition('/')[2] for f in fields
                            if f.partition('/')[0] == root]
                 self.generateCsvRecord(
@@ -404,7 +405,7 @@ class CsvBrowseDataGenerator(BrowseDataGenerator):
                 continue
 
             # Check if it's a one2many or many2many
-            if isinstance(value, orm.browse_record_list):
+            if isinstance(value, models.BaseModel):
                 if not value:
                     continue
                 fields2 = [f.partition('/')[2] for f in fields
@@ -458,7 +459,7 @@ class CsvBrowseDataGenerator(BrowseDataGenerator):
                 else:
                     fd, file_name = tempfile.mkstemp()
                     try:
-                        os.write(fd, base64.b64decode(value))
+                        os.write(fd, base64.decodestring(value))
                     finally:
                         os.close(fd)
                     self.temporary_files.append(file_name)
