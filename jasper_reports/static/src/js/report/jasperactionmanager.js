@@ -45,7 +45,7 @@ odoo.define('report_xml.report', function (require) {
                     data: JSON.stringify([url, type]),
                 },
                 success: def.resolve.bind(def),
-                error: function () {
+                error: function (error) {
                     /*crash_manager.rpc_error.apply(crash_manager, arguments);*/
                     self.call('crash_manager', 'rpc_error', error);
                     def.reject();
