@@ -46,7 +46,7 @@
     ],
     "category": "Generic Modules/Jasper Reports",
     "demo": [
-        'demo/jasper_report_demo.xml',
+
     ],
     "data": [
         'security/ir.model.access.csv',
@@ -56,6 +56,7 @@
         'views/jasper_report_menu.xml',
         'views/report_xml_view.xml',
         'views/res_company_view.xml',
+        'demo/jasper_report_demo.xml',
     ],
     "installable": True,
     "application": True,
