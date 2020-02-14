@@ -120,18 +120,18 @@ class BrowseDataGenerator(AbstractDataGenerator):
                     self.warning(warning % (root, record._name))
                     continue
 
-                if isinstance(value, models.BaseModel):
-                    relations2 = [
-                        field.partition('/')[2] for field in relations
-                        if field.partition('/')[0] == root and
-                        field.partition('/')[2]]
-                    return self.generate_ids(
-                        value, relations2, current_path, current_records)
+                # if isinstance(value, models.BaseModel):
+                #     relations2 = [
+                #         field.partition('/')[2] for field in relations
+                #         if field.partition('/')[0] == root and
+                #         field.partition('/')[2]]
+                #     return self.generate_ids(
+                #         value, relations2, current_path, current_records)
 
-                if not isinstance(value, models.BaseModel):
-                    wrng2 = "Field '%s' in model '%s' is not a relation field."
-                    self.warning(wrng2 % (root, self.model))
-                    return current_records
+                # if not isinstance(value, models.BaseModel):
+                #     wrng2 = "Field '%s' in model '%s' is not a relation field."
+                #     self.warning(wrng2 % (root, self.model))
+                #     return current_records
 
             # Only join if there are any records because it's a LEFT JOIN
             # If we wanted an INNER JOIN we wouldn't check for "value" and
@@ -396,13 +396,13 @@ class CsvBrowseDataGenerator(BrowseDataGenerator):
                             wrng6 % (root, current_path, record._name))
 
             # Check if it's a many2one
-            if isinstance(value, models.BaseModel):
-                fields2 = [f.partition('/')[2] for f in fields
-                           if f.partition('/')[0] == root]
-                self.generateCsvRecord(
-                    value, records, row, current_path,
-                    fields2, sequence, subsequence, copy)
-                continue
+            # if isinstance(value, models.BaseModel):
+            #     fields2 = [f.partition('/')[2] for f in fields
+            #                if f.partition('/')[0] == root]
+            #     self.generateCsvRecord(
+            #         value, records, row, current_path,
+            #         fields2, sequence, subsequence, copy)
+            #     continue
 
             # Check if it's a one2many or many2many
             if isinstance(value, models.BaseModel):
